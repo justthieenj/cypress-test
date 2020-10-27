@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:open:no-rerun": "cypress open --config watchForFileChanges=false"
   },
   "author": "",
   "license": "ISC",
