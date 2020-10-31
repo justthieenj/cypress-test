@@ -1,9 +1,9 @@
 class NewArticle {
 
     inputHeader(header, value) {
-        var txtHeader = "//div[contains(@class, \'form-inline-header\')]//div[label[contains(.,\'${header}\')]]//following-sibling::div//input"
+        var txtHeader = `//div[contains(@class, \'form-inline-header\')]//div[label[contains(.,\'${header}\')]]//following-sibling::div//input`;
         cy.xpath(txtHeader)
-            .type(value)
+            .type(value);
 
     }
 
@@ -13,16 +13,22 @@ class NewArticle {
             case 'Category':
             case 'Access':
             case 'Language':
-                var cbbFormVertical = "//fieldset//div[contains(.,\'${header}\')]//following-sibling::div/select"
-                cy.get(cbbFormVertical)
-                    .select(value)
+                var cbbFormVertical = `//fieldset//div[label[contains(.,\'${header}\')]]//following-sibling::div`;
+                var item = `${cbbFormVertical}//option[normalize-space()=\'${value}\']`;
+                cy.xpath(cbbFormVertical)
+                    .click();
+                cy.xpath(item)
+                    .click({force: true});
+                break;
             case 'Featured':
-                cy.get('#jform_featured')
-                    .select(value)
+                var featuredOption = `//fieldset//div[label[contains(.,\'${header}\')]]//following-sibling::div//label[normalize-space()=\'${value}\']`;
+                cy.xpath(featuredOption)
+                    .click();
+                break;
             default:
-                var txtFormVertical = "//div[div[label[normalize-space()=\'${header}\']]]//input"
+                var txtFormVertical = `//div[div[label[normalize-space()=\'${header}\']]]//input`;
                 cy.get(txtFormVertical)
-                    .type(value)
+                    .type(value);
         }
     }
 
@@ -33,17 +39,17 @@ class NewArticle {
     getIframeBody() {
       return cy.get('#jform_articletext_ifr')
       .its('body').should('not.be.undefined')
-      .then(cy.wrap)
+      .then(cy.wrap);
     }
 
     inputContent(value) {
-        this.getIframeBody().find('[data-id=jform_articletext] p').type(value)
+        this.getIframeBody().find('[data-id=jform_articletext] p').type(value);
     }
 
     clickToolbarButton(button) {
-        var btnToolbar = "//div[@class='container-fluid']//button[normalize-space()=\'${button}\']"
+        var btnToolbar = `//div[@class='container-fluid']//button[normalize-space()=\'${button}\']`;
         cy.get(btnToolbar)
-            .click()
+            .click();
     }
 }
 
